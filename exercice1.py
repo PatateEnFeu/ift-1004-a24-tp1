@@ -10,38 +10,75 @@ import random  # Importation du module random pour générer des nombres aléato
 print("#########################################")
 print("          IFT-1004 Airlines              ")
 print("#########################################")
-print("")
-print("La meilleure compagnie aérienne du monde !")
-print("")
+print("\nLa meilleure compagnie aérienne du monde !")
 
-nbr_passagers = int(input('Combien de billets souhaitez-vous réserver: '))
+nbr_passagers = int(input('\nCombien de billets souhaitez-vous réserver: '))
 num_passager = 1
 
-while (nbr_passagers >= num_passager):
-        print("===============")
-        print("Passager",num_passager,"/",nbr_passagers,)
+prix_billet1 = 0.00
+prix_billet2 = 0.00
+prix_billet3 = 0.00
+prix_global = 0.00
+
+choix = 0
+
+while choix != 2:
+    while (nbr_passagers >= num_passager):
+        print("\n===============")
+        print(f'Passager {num_passager}/{nbr_passagers}')
         print("===============")
 
-        print("Nom du passager",num_passager,": ", end="")
+        print(f'Nom du passager {num_passager}: ',end="")
         nom = str(input(""))
 
-        print("Âge du passager",num_passager,": ", end="")
+        print(f'Âge du passager {num_passager}: ',end="")
         age = int(input(""))
 
         rabais = 0
         if age <= 3 :
             rabais = 0
-            prix_billet = 0
-            print("Prix du billet réservé pour",nom,": ",prix_billet,"$" )
+            prix_billet = 0.00
+            prix_billet1 += prix_billet
+            print(f'\nPrix du billet réservé pour {nom}: {prix_billet}$')
+            num_passager += 1
+
         elif age >= 65 :
             rabais = random.randint(15, 55)
             prix_billet = 150 - (150 * (rabais/100))
-            print("Rabais appliqué pour",nom,": ",rabais,"%")
-            print("Prix du billet réservé pour",nom,": ",prix_billet,"$" )
+            prix_billet2 += prix_billet
+            print(f'Rabais appliqué pour {nom}: {rabais}%')
+            print(f'\nPrix du billet réservé pour {nom}: {prix_billet}$')
+            num_passager += 1
         else:
-            prix_billet = 150
-            print("Prix du billet réservé pour",nom,": ",prix_billet,"$" )
-
-    # elif : servira à gérer le cas ou le passager entre 0 dès le début
-
+            prix_billet = 150.00
+            prix_billet3 += prix_billet
+            print(f'\nPrix du billet réservé pour {nom}: {prix_billet}$')
+            num_passager += 1
     
+    if nbr_passagers != 0 :
+        prix_global += prix_billet1 + prix_billet2 + prix_billet3 #Valeur à ne pas réinitialiser pour le prix cumulé
+        prix_total = prix_billet1 + prix_billet2 + prix_billet3 #Valeurs qui seront réinitialiser à la fin de la boucle
+        print (f"\nLe montant total à encaisser cette réservation est: {prix_total}$")
+
+        print(f'\n1. Enregistrer un autre client')
+        print(f'2. Quitter')
+        print(f'Entrez votre choix: ', end="")
+        choix = int(input(''))
+
+    while choix != 1 and choix != 2 :
+        print(f'Choix invalide, veuillez entrer 1 ou 2: ',end="")
+        choix = int(input(''))       
+
+# Réinitialisation des valeurs quand l'utilisateur fait le choix 1
+    while choix == 1 :
+        nbr_passagers = int(input('\nCombien de billets souhaitez-vous réserver: ')) # se répète quand la valeur entrée est 0
+        num_passager = 1
+        prix_billet1 = 0 
+        prix_billet2 = 0 
+        prix_billet3 = 0 
+        prix_total = 0
+        choix = 0
+#Fin code quand l'utilisateur fait le choix 2 en affichant le montant total cumulè
+    if choix == 2 :
+        print(f'\nMontant total cumulé pour tous les clients enregistrés : {prix_global}$')
+        print(f'Bye bye!')
